@@ -1,0 +1,159 @@
+# definition of a Label for the text
+<BlackLabel@Label>:
+    color: (0.168,0,0.191,1)
+
+# definition of a custom Title Label
+<TitleLabel@Label>:
+    canvas.before:
+        Color:
+            rgba: (0.168,0,0.191,1)
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    color: (1, 1, 1, 1)
+
+# creation of a custom spinner
+<CustomSpinner@Spinner>:
+    background_normal: ""
+    background_color: (1, 0.5, 0, 1)
+    color: (0, 0, 0, 1)
+
+# creation of a custom textinput
+<CustomTextInput@TextInput>:
+    multiline: False
+    halign: "center"
+
+<CustomButton@Button>:
+    background_normal: ""
+    background_color: (0.124,0.1,0.176,0.8)
+    on_press: self.background_color = (0.58, 0.134, 0.05, 0.8)
+    on_release: self.background_color = (0.58, 0.134, 0.05, 0.8)
+
+# MainWindow screen style
+<MainWindow>:
+    submit_button: submit_button
+    nome: nome
+
+
+    BoxLayout:
+        padding: 20,50,20,20
+        spacing: 30
+        id: main_box
+        canvas.before:
+            Color:
+                rgba: (1,1,1,1)
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        orientation: "vertical"
+        BoxLayout:
+            id: title
+            size_hint_y: 0.1
+            TitleLabel:
+                font_size: 50
+                bold: True
+                text: "Formulário"
+        BoxLayout:
+            padding: 20
+            spacing: 30
+            id: fields
+            orientation: "vertical"
+            BoxLayout:
+                spacing: 1
+                size_hint_y: .3
+                BlackLabel:
+                    size_hint_x: .4
+                    text: "Nome"
+                CustomTextInput:
+                    id: nome
+                    multiline: False
+                    hint_text: "Nome"
+                    halign: "center"
+
+
+        BoxLayout:
+            id: button
+            size_hint_y: .1
+            Label:
+            CustomButton:
+                id: submit_button
+                text: "Enviar"
+                on_release: root.confirm_submit_form()
+            Label:
+
+
+# style definition for the popup window
+<CustomPopup>:
+    submit_form: submit_form
+    BoxLayout:
+        canvas.before:
+            Color:
+                rgba: (1, 1, 1, 1)
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        orientation: "vertical"
+        Label:
+            text: "Confirma?"
+            color: ( (1, 0.5, 0, 1))
+        BoxLayout:
+            size_hint_y: .1
+            Button:
+                text: "Cancelar"
+                on_release:
+                    root.dismiss_popup()
+            Button:
+                id: submit_form
+                text: "Enviar"
+                on_release:
+                    root.submit_form()
+                    root.dismiss_popup()
+
+# SecondWindow screen style definition
+<SecondWindow>:
+    summary_date: summary_date
+    name: "secondwindow"
+    BoxLayout:
+        canvas.before:
+            Color:
+                rgba: (1,1,1,1)
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        orientation: "vertical"
+        padding: 20,100,20,20
+        spacing: 20
+
+        ScrollView:
+            padding: 20,100,20,20
+            canvas.before:
+                Color:
+                    rgba: (0,0,0,0.05)
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+            size_hint_y: .9
+            do_scroll_x: False
+            do_scroll_y: True
+            BoxLayout:
+                padding: 20
+                spacing: 50
+                size_hint_y: None
+                height: self.minimum_height
+                orientation:'vertical'
+                id: summary_date
+
+        BoxLayout:
+            spacing: 20
+            padding: 10
+            orientation: "horizontal"
+            size_hint_y:.1
+            CustomButton:
+                text: "Voltar"
+                on_release: root.go_back()
+            CustomButton:
+                text: "Detalhes"
+                on_release: root.get_data()
+            CustomButton:
+                text: "Sair"
+                on_release: exit()
